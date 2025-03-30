@@ -1,0 +1,64 @@
+body{
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+body main h1{
+    text-align: center;
+}
+main{
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+}
+::backdrop{
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3));
+}
+dialog{
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 525px;
+    min-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 0.5em;
+    text-align: center;
+    padding: 0.8em 1.5em 1em;
+}
+dialog h2{
+    margin-bottom: 0.5em;
+    color: #111;
+    letter-spacing: 1.5px;
+}
+
+dialog p{
+    margin-bottom: 1.25em;
+    color: #555;
+    padding: 0 0.5em;
+    font-size: 15px;
+    text-align: justify;
+}
+
+dialog p span.text-centered{
+    display: block;
+    text-align: center;
+}
+
+dialog .controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-bottom: 0.5em;
+}
+dialog .controls button{
+    padding: 0.75em;
+    letter-spacing: 1px;
+    cursor: pointer;
+    background: #00acee;
+    outline: none;
+    border: 1px solid #00acee;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.93em;
+    width: 33%;
+}
