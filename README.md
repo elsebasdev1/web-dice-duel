@@ -31,4 +31,4 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/elsebasdev1/web-dice-duel
+   git clone https://github.com/elsebasdev1/web-dice-duel.git
