@@ -6,12 +6,24 @@
     <title>Dice Duel</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/5052/5052121.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
     <main>
         <h1>Welcome to Dice Duel</h1>
-        <button id="open-popup">Rules</button>
     </main>
+
+    <div class="tooltip-container rules-btn">
+        <button id="open-popup">
+            <i class="fa-regular fa-circle-question"></i>
+        </button>
+        <span class="tooltip-text">Rules</span>
+    </div>
+
+    <div class="tooltip-container restart-btn">
+        <button id="restart-game">restart</button>
+        <span class="tooltip-text">Restart</span>
+    </div>
 
     <dialog id="rules-dialog">
         <h2>Rules of the game</h2>

@@ -3,17 +3,44 @@ body{
     font-family: "Poppins", sans-serif;
 }
 
-body main h1{
-    text-align: center;
-}
 main{
     min-height: 100vh;
     display: grid;
     place-items: center;
+    grid-template-rows: 0 1fr auto; /*Se divide en tres filas*/
 }
+
+h1{
+    align-self: self-start;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #222;
+    margin-top: 0.25rem;
+}
+
+#open-popup, 
+#restart-game{
+    align-self: end; /* Abajo */
+    justify-self: start; /* Izquierda */
+    font-size: 1rem;
+    background: #00acee;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 0.75em 1em;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+#open-popup i{
+    font-size: 1.5rem;
+}
+
 ::backdrop{
     background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3));
 }
+
 dialog{
     box-sizing: border-box;
     width: 100%;
@@ -24,6 +51,7 @@ dialog{
     text-align: center;
     padding: 0.8em 1.5em 1em;
 }
+
 dialog h2{
     margin-bottom: 0.5em;
     color: #111;
@@ -61,4 +89,48 @@ dialog .controls button{
     color: #fff;
     font-size: 0.93em;
     width: 33%;
+}
+
+/*Better tooltip*/
+.rules-btn {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+}
+
+.restart-btn {
+    position: fixed;
+    bottom: 10px;
+    left: 80px; 
+}
+
+.tooltip-container .tooltip-text {
+    visibility: hidden;
+    width: 80px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 6px;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 120%; /* Para que aparezca arriba del botón */
+    left: 70%;
+    transform: translateX(-55%);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.tooltip-container .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Flechita apuntando hacia el botón */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
 }
