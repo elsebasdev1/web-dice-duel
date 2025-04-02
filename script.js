@@ -59,7 +59,7 @@ function rollDice() {
             }
 
             players[`Player ${turn}`] += randomValue;
-            updatePlayerTable();
+            
 
             setTimeout(() => {  
                 if (round < 4 ) {
@@ -80,9 +80,9 @@ function rollDice() {
                 }
 
 
-
+                updatePlayerTable();
                 isRolling = false;
-            }, time * 1000);
+            }, time * 1000);  
         }, 300);
     }, 300);
 }
