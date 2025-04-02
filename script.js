@@ -4,6 +4,9 @@ const time = 2; // Duración total de la animación
 const rollButton = document.getElementById('roll-dice');
 const turnText = document.getElementById('player-turn');
 const roundText = document.getElementById('game-round');
+const player1 = document.getElementById("player1");
+const player2 = document.getElementById("player2");
+const players = { "Player 1": 0, "Player 2": 0 };
 
 let turn = 1; //Player 1 starts
 let round = 1;
@@ -55,12 +58,15 @@ function rollDice() {
                 case 6: cube.style.transform = `translateY(200px) rotateX(3600deg) rotateY(1980deg) rotateZ(3600deg)`; break;
             }
 
+            players[`Player ${turn}`] += randomValue;
+            updatePlayerTable();
+
             setTimeout(() => {  
                 if (round < 4 ) {
                     turn = (turn === 1) ? 2 : 1;
                     if (turn === 1 && round < 3) {
                         round++;
-                    }
+                    }                    
                 }
 
                 turnText.textContent = `Player ${turn}`;
@@ -73,9 +79,10 @@ function rollDice() {
                     }, 300); //Delay to wait the dice stops
                 }
 
+
+
                 isRolling = false;
             }, time * 1000);
-
         }, 300);
     }, 300);
 }
@@ -85,7 +92,12 @@ rollButton.addEventListener('click', rollDice);
 
 //Roll with space bar
 document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space') {
+    if (event.code === 'Space' && rollCount<6) {
         rollDice();
     }
 });
+
+function updatePlayerTable() {
+    player1.textContent = `${players["Player 1"]} pts`;
+    player2.textContent = `${players["Player 2"]} pts`;
+}
