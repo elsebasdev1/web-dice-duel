@@ -31,6 +31,7 @@
 - Razon1: No me puedo expresar ecuatorianamente como se debe cuando quiero insultarte
 - Razon2: La labia no fluyen en English como en Spanish.
 - Probando la sincronizacion de github con el visual studio. 
+- Esto es la prueba del delay.
 
 ## Installation
 
