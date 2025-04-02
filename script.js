@@ -22,11 +22,12 @@ document.querySelector(".close-btn").addEventListener("click", function(){
 });
 
 function rollDice() {
-    if (round > 3 || isRolling) {
+    if (isRolling) {
         return;
     }
 
     isRolling = true;
+    rollCount++;
 
     cube.style.transition = ''; 
     cube.style.animation = ''; 
@@ -65,11 +66,11 @@ function rollDice() {
                 turnText.textContent = `Player ${turn}`;
                 roundText.textContent = ` ${round}`;
 
-                if (round === 3 && turn === 2) {
+                if (rollCount == 6) {
                     setTimeout(() => {
-                        alert("The game is over.");
+                        alert("Game finished.");
                         rollButton.disabled = true;
-                    }, 500); //Delay to wait the dice stops
+                    }, 300); //Delay to wait the dice stops
                 }
 
                 isRolling = false;
