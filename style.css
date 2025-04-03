@@ -421,6 +421,15 @@ dialog .controls button{
     width: 400px;
 }
 
+.table-top {
+    top: 5em;
+    right: -10px;
+    margin-top: 8.75em;
+    margin-right: 5.25em;
+    text-align: center;
+    width: 400px;
+}
+
 .table-styled th, .table-styled td,
 .table-players th, .table-players td,
 .table-history th, .table-history td {

@@ -20,6 +20,10 @@ const tblPlayersPlayer1 = document.getElementById('tbl-players-player1');
 const tblPlayersPlayer2 = document.getElementById('tbl-players-player2');
 const tblHistoryPlayer1 = document.getElementById('tbl-history-player1');
 const tblHistoryPlayer2 = document.getElementById('tbl-history-player2');
+let roundScores = { "Player 1": 0, "Player 2": 0 }; // Guarda valores de cada ronda
+const historyPopup = document.getElementById("history-popup");
+const openHistoryButton = document.getElementById("open-history");
+const closeHistoryButton = document.getElementById("close-history");
 
 let turn = 1; //Player 1 starts
 let round = 1;
@@ -30,6 +34,16 @@ let colorPlayer1 = diceColorPlayer1.value;
 let colorPlayer2 = diceColorPlayer2.value;
 let player1Name = player1NameInput.value;
 let player2Name = player2NameInput.value;
+
+openHistoryButton.addEventListener("click", () => {
+    loadFinalScores(); // Cargar historial antes de abrir
+    historyPopup.showModal();
+});
+
+// Cerrar el popup
+closeHistoryButton.addEventListener("click", () => {
+    historyPopup.close();
+});
 
 function changeBackgroundColor() {
     const color = turn === 1 ? colorPlayer1 : colorPlayer2;
@@ -67,6 +81,7 @@ settingsForm.addEventListener('submit', (event) => {
 
 window.addEventListener('load', () => {
     rulesDialog.showModal();
+    loadFinalScores();
 });
 
 document.querySelector("#open-popup").addEventListener("click", function(){
@@ -110,6 +125,7 @@ function rollDice() {
             cube.style.transition = `transform ${time}s ease-out`;
             const randomValue = Math.floor(Math.random() * 6) + 1;
             console.log(`randomValue: ${randomValue}`);
+            roundScores[`Player ${turn}`] = randomValue;
 
             switch(randomValue) {
                 case 1: cube.style.transform = `translateY(200px) rotateX(3600deg) rotateY(3600deg) rotateZ(3600deg)`; break;
@@ -121,10 +137,10 @@ function rollDice() {
             }
 
             players[`Player ${turn}`] += randomValue;
-            setTimeout(() => {
-                saveToHistory();
-            }, 300);
-            
+            if (turn === 2) { // Solo guardamos el historial después del segundo turno en cada ronda
+                saveToHistory(); // Guardar los puntajes individuales de la ronda
+                roundScores = { "Player 1": 0, "Player 2": 0 }; // Reiniciar valores de la ronda
+            }
 
             setTimeout(() => {  
                 if (round < 4 ) {
@@ -152,6 +168,7 @@ function rollDice() {
                         }
                         alert(winner);
                         rollButton.disabled = true;
+                        saveFinalScore();
                     }, 300); //Delay to wait the dice stops
                 }
 
@@ -217,26 +234,58 @@ function restartGame(){
 restartButton.addEventListener('click', restartGame);
 
 function saveToHistory() {
-    if (turn === 1) return; 
     const historyBody = document.getElementById("history-body");
-    const date = new Date().toLocaleString();
-
-    // Crear fila y celdas
     const row = document.createElement("tr");
-    const dateCell = document.createElement("td");
+
+    const roundCell = document.createElement("td");
     const player1Cell = document.createElement("td");
     const player2Cell = document.createElement("td");
 
-    // Asignar valores a las celdas
-    dateCell.textContent = round; // Se usa el número de ronda en vez de la fecha
-    player1Cell.textContent = `${players["Player 1"]} pts`;
-    player2Cell.textContent = `${players["Player 2"]} pts`;
+    roundCell.textContent = round;
+    player1Cell.textContent = `${roundScores["Player 1"]} pts`;
+    player2Cell.textContent = `${roundScores["Player 2"]} pts`;
 
-    // Agregar celdas a la fila
-    row.appendChild(dateCell);
+    row.appendChild(roundCell);
     row.appendChild(player1Cell);
     row.appendChild(player2Cell);
 
-    // Agregar fila a la tabla
     historyBody.appendChild(row);
+}
+
+function saveFinalScore() {
+    const finalScores = {
+        date: new Date().toLocaleString(),
+        player1: players["Player 1"],
+        player2: players["Player 2"]
+    };
+
+    let savedScores = JSON.parse(localStorage.getItem("gameScores")) || [];
+    savedScores.push(finalScores);
+    localStorage.setItem("gameScores", JSON.stringify(savedScores));
+
+    loadFinalScores(); // Cargar en la tabla
+}
+
+function loadFinalScores() {
+    const savedScores = JSON.parse(localStorage.getItem("gameScores")) || [];
+    const historyBody1 = document.getElementById("history-body1");
+
+    //historyBody1.innerHTML = ""; // Limpiar tabla antes de cargar
+
+    savedScores.forEach(score => {
+        const row = document.createElement("tr");
+
+        const dateCell = document.createElement("td");
+        const player1Cell = document.createElement("td");
+        const player2Cell = document.createElement("td");
+
+        dateCell.textContent = score.date;
+        player1Cell.textContent = `${score.player1} pts`;
+        player2Cell.textContent = `${score.player2} pts`;
+
+        row.appendChild(dateCell);
+        row.appendChild(player1Cell);
+        row.appendChild(player2Cell);
+        historyBody1.appendChild(row);
+    });
 }
