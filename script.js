@@ -20,7 +20,7 @@ const tblPlayersPlayer1 = document.getElementById('tbl-players-player1');
 const tblPlayersPlayer2 = document.getElementById('tbl-players-player2');
 const tblHistoryPlayer1 = document.getElementById('tbl-history-player1');
 const tblHistoryPlayer2 = document.getElementById('tbl-history-player2');
-let roundScores = { "Player 1": 0, "Player 2": 0 }; // Guarda valores de cada ronda
+let roundScores = { "Player 1": 0, "Player 2": 0 };
 const historyPopup = document.getElementById("history-popup");
 const openHistoryButton = document.getElementById("open-history");
 const closeHistoryButton = document.getElementById("close-history");
@@ -137,10 +137,13 @@ function rollDice() {
             }
 
             players[`Player ${turn}`] += randomValue;
-            if (turn === 2) { // Solo guardamos el historial después del segundo turno en cada ronda
-                saveToHistory(); // Guardar los puntajes individuales de la ronda
-                roundScores = { "Player 1": 0, "Player 2": 0 }; // Reiniciar valores de la ronda
-            }
+            setTimeout(() => {
+                if (turn === 2) { // Solo guardamos el historial después del segundo turno en cada ronda
+                    saveToHistory(); // Guardar los puntajes individuales de la ronda
+                    roundScores = { "Player 1": 0, "Player 2": 0 }; // Reiniciar valores de la ronda
+                }
+            }, 1500);
+            
 
             setTimeout(() => {  
                 if (round < 4 ) {
