@@ -228,6 +228,8 @@ function restartGame(){
         tblHistoryPlayer2.textContent = player2Name;
         rollCount = 0;
         isRolling = false;
+        const historyBody = document.getElementById("history-body");
+        historyBody.innerHTML = "";
     } 
 }
 
