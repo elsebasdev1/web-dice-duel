@@ -1,28 +1,74 @@
-const dialog = document.querySelector("dialog");
+const rulesDialog = document.getElementById('rules-dialog');
 const cube = document.querySelector('.cube');
-const time = 2; // Duración total de la animación
+const time = 1.85; // Duración total de la animación
 const rollButton = document.getElementById('roll-dice');
 const turnText = document.getElementById('player-turn');
 const roundText = document.getElementById('game-round');
 const player1 = document.getElementById("player1");
 const player2 = document.getElementById("player2");
 const players = { "Player 1": 0, "Player 2": 0 };
-const historyTable = document.querySelector(".table-history tbody");
 
 let turn = 1; //Player 1 starts
 let round = 1;
 let rollCount = 0;
 let isRolling = false;
+let audio = new Audio("audio/dice_sound.mp3");
+let colorPlayer1 = diceColorPlayer1.value;
+let colorPlayer2 = diceColorPlayer2.value;
+let player1Name = player1NameInput.value;
+let player2Name = player2NameInput.value;
+
+function changeBackgroundColor() {
+    const color = turn === 1 ? colorPlayer1 : colorPlayer2;
+    document.body.style.background = `linear-gradient(0deg, #ddd, ${color} )`;
+}
+
+diceColorPlayer1.addEventListener('input', (event) => {
+    colorPlayer1 = event.target.value;
+    if (turn === 1) {
+        changeBackgroundColor();
+    }
+});
+
+diceColorPlayer2.addEventListener('input', (event) => {
+    colorPlayer2 = event.target.value;
+    if (turn === 2) {
+        changeBackgroundColor();
+    }
+});
+
+settingsForm.addEventListener('submit', (event) => {
+    event.preventDefault(); 
+    colorPlayer1 = diceColorPlayer1.value;
+    colorPlayer2 = diceColorPlayer2.value;
+    player1Name = player1NameInput.value;
+    player2Name = player2NameInput.value;
+    turnText.textContent = player1Name;
+    tblPlayersPlayer1.textContent = player1Name;
+    tblPlayersPlayer2.textContent = player2Name;
+    tblHistoryPlayer1.textContent = player1Name;
+    tblHistoryPlayer2.textContent = player2Name;
+    changeBackgroundColor();
+    settingsDialog.close();
+});
 
 window.addEventListener('load', () => {
-    dialog.showModal();
+    rulesDialog.showModal();
 });
 
 document.querySelector("#open-popup").addEventListener("click", function(){
-    dialog.showModal();
+    rulesDialog.showModal();
 });
 document.querySelector(".close-btn").addEventListener("click", function(){
-    dialog.close();
+    rulesDialog.close();
+});
+
+settingsButton.addEventListener('click', () => {
+    settingsDialog.showModal(); 
+});
+
+closeSettingsButton.addEventListener('click', () => {
+    settingsDialog.close();
 });
 
 function rollDice() {
@@ -32,6 +78,8 @@ function rollDice() {
 
     isRolling = true;
     rollCount++;
+    audio.currentTime = 0;
+    audio.play();
 
     cube.style.transition = ''; 
     cube.style.animation = ''; 
@@ -69,24 +117,38 @@ function rollDice() {
                         round++;
                     }                    
                 }
-
-                turnText.textContent = `Player ${turn}`;
+                if(turn ===1){
+                    turnText.textContent = player1Name;
+                }else{
+                    turnText.textContent = player2Name;
+                }
                 roundText.textContent = ` ${round}`;
 
                 if (rollCount == 6) {
                     setTimeout(() => {
-                        alert("Game finished.");
+                        let winner;
+                        if (players["Player 1"] > players["Player 2"]) {
+                            winner = `${player1Name} wins!`;
+                        } else if (players["Player 1"] < players["Player 2"]) {
+                            winner = `${player2Name} wins!`;
+                        } else {
+                            winner = "It's a tie!";
+                        }
+                        alert(winner);
                         rollButton.disabled = true;
                     }, 300); //Delay to wait the dice stops
                 }
 
 
                 updatePlayerTable();
+                changeBackgroundColor();
                 isRolling = false;
             }, time * 1000);  
         }, 300);
     }, 300);
 }
+
+
 
 //Roll with button
 rollButton.addEventListener('click', rollDice);
@@ -98,18 +160,19 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+document.addEventListener('keydown', (event) => {
+    if (event.key.toLowerCase() === 'r') {
+        restartGame();
+    }
+});
+
+document.addEventListener("keydown", function(event){
+    if (event.key.toLowerCase() === 'i') {
+        dialog.showModal();
+    } 
+});
+
 function updatePlayerTable() {
     player1.textContent = `${players["Player 1"]} pts`;
     player2.textContent = `${players["Player 2"]} pts`;
-}
-
-function saveToHistory() {
-    const date = new Date().toLocaleString();
-    const row = document.createElement("tr");
-    row.innerHTML = `
-        <td>${round}</td>
-        <td>${players["Player 1"]} pts</td>
-        <td>${players["Player 2"]} pts</td>
-    `;
-    historyTable.appendChild(row);
 }
