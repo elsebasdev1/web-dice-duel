@@ -230,6 +230,7 @@ function restartGame(){
         isRolling = false;
         const historyBody = document.getElementById("history-body");
         historyBody.innerHTML = "";
+        rollButton.disabled = false;
     } 
 }
 
