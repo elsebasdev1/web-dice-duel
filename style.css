@@ -22,7 +22,8 @@ h1{
 #open-popup, 
 #restart-game,
 #roll-dice,
-#game-settings{
+#game-settings,
+#open-history{
     align-self: end; /* Abajo */
     justify-self: start; /* Izquierda */
     font-size: 1rem;
@@ -42,7 +43,7 @@ h1{
     margin-bottom: 1.5em;
 }
 
-#open-popup, #game-settings, #restart-game{
+#open-popup, #game-settings, #restart-game, #open-history{
     width: 3.5em;
     height: 3em;
     margin-right: 0.5em;
@@ -178,6 +179,12 @@ dialog .controls button{
     position: fixed;
     bottom: 5px;
     left: 10px;
+}
+
+.history-btn{
+    position: fixed;
+    bottom: 5px;
+    left: 205px;
 }
 
 .tooltip-container .tooltip-text {
@@ -473,4 +480,31 @@ button:hover {
     'wght' 400,
     'GRAD' 0,
     'opsz' 24
+}
+
+button:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, red, blue, deeppink, blue, red, blue, deeppink, blue);
+    background-size: 800%;
+    border-radius: 12px;
+    filter: blur(8px);
+    animation: glowing 20s linear infinite;
+}
+
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
 }
