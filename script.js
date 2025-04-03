@@ -7,6 +7,19 @@ const roundText = document.getElementById('game-round');
 const player1 = document.getElementById("player1");
 const player2 = document.getElementById("player2");
 const players = { "Player 1": 0, "Player 2": 0 };
+const restartButton = document.getElementById('restart-game');
+const settingsButton = document.getElementById('game-settings');
+const settingsDialog = document.getElementById('settings-dialog');
+const closeSettingsButton = document.getElementById('close-settings');
+const settingsForm = document.getElementById('settings-form');
+const diceColorPlayer1 = document.getElementById('dice-color-player1');
+const diceColorPlayer2 = document.getElementById('dice-color-player2');
+const player1NameInput = document.getElementById('player1-name');
+const player2NameInput = document.getElementById('player2-name');
+const tblPlayersPlayer1 = document.getElementById('tbl-players-player1');
+const tblPlayersPlayer2 = document.getElementById('tbl-players-player2');
+const tblHistoryPlayer1 = document.getElementById('tbl-history-player1');
+const tblHistoryPlayer2 = document.getElementById('tbl-history-player2');
 
 let turn = 1; //Player 1 starts
 let round = 1;
@@ -108,7 +121,10 @@ function rollDice() {
             }
 
             players[`Player ${turn}`] += randomValue;
-            saveToHistory();
+            setTimeout(() => {
+                saveToHistory();
+            }, 300);
+            
 
             setTimeout(() => {  
                 if (round < 4 ) {
@@ -175,4 +191,52 @@ document.addEventListener("keydown", function(event){
 function updatePlayerTable() {
     player1.textContent = `${players["Player 1"]} pts`;
     player2.textContent = `${players["Player 2"]} pts`;
+}
+
+function restartGame(){
+    if (confirm("Restart the game?")) {
+        turnText.textContent = `Player 1`;
+        roundText.textContent = ` 1`;
+        players[`Player 1`] = 0;   
+        players[`Player 2`] = 0;  
+        player1.textContent = `${players["Player 1"]} pts`;
+        player2.textContent = `${players["Player 2"]} pts`; 
+        turn = 1; //Player 1 starts
+        round = 1;
+        player1Name = "Player 1";
+        player2Name = "Player 2";
+        tblPlayersPlayer1.textContent = player1Name;
+        tblPlayersPlayer2.textContent = player2Name;
+        tblHistoryPlayer1.textContent = player1Name;
+        tblHistoryPlayer2.textContent = player2Name;
+        rollCount = 0;
+        isRolling = false;
+    } 
+}
+
+restartButton.addEventListener('click', restartGame);
+
+function saveToHistory() {
+    if (turn === 1) return; 
+    const historyBody = document.getElementById("history-body");
+    const date = new Date().toLocaleString();
+
+    // Crear fila y celdas
+    const row = document.createElement("tr");
+    const dateCell = document.createElement("td");
+    const player1Cell = document.createElement("td");
+    const player2Cell = document.createElement("td");
+
+    // Asignar valores a las celdas
+    dateCell.textContent = round; // Se usa el número de ronda en vez de la fecha
+    player1Cell.textContent = `${players["Player 1"]} pts`;
+    player2Cell.textContent = `${players["Player 2"]} pts`;
+
+    // Agregar celdas a la fila
+    row.appendChild(dateCell);
+    row.appendChild(player1Cell);
+    row.appendChild(player2Cell);
+
+    // Agregar fila a la tabla
+    historyBody.appendChild(row);
 }
