@@ -189,24 +189,30 @@ function rollDice() {
 //Roll with button
 rollButton.addEventListener('click', rollDice);
 
-//Roll with space bar
-document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space' && rollCount<6) {
+function handleKeyDown(event) {
+    if (event.code === 'Space' && rollCount < 6) {
         rollDice();
     }
-});
-
-document.addEventListener('keydown', (event) => {
+    
     if (event.key.toLowerCase() === 'r') {
         restartGame();
     }
-});
-
-document.addEventListener("keydown", function(event){
+    
     if (event.key.toLowerCase() === 'i') {
-        dialog.showModal();
-    } 
-});
+        rulesDialog.showModal();
+    }
+
+    if (event.key.toLowerCase() === 'h') {
+        loadFinalScores();
+        historyPopup.showModal();
+    }
+    
+    if (event.key.toLowerCase() === 's') {
+        settingsDialog.showModal();
+    }
+}
+
+document.addEventListener('keydown', handleKeyDown);
 
 function updatePlayerTable() {
     player1.textContent = `${players["Player 1"]} pts`;
@@ -276,7 +282,7 @@ function loadFinalScores() {
     const savedScores = JSON.parse(localStorage.getItem("gameScores")) || [];
     const historyBody1 = document.getElementById("history-body1");
 
-    //historyBody1.innerHTML = ""; // Limpiar tabla antes de cargar
+    historyBody1.innerHTML = ""; // Limpiar tabla antes de cargar
 
     savedScores.forEach(score => {
         const row = document.createElement("tr");
