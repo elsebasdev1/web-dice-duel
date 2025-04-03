@@ -36,11 +36,10 @@ let player1Name = player1NameInput.value;
 let player2Name = player2NameInput.value;
 
 openHistoryButton.addEventListener("click", () => {
-    loadFinalScores(); // Cargar historial antes de abrir
+    loadFinalScores();
     historyPopup.showModal();
 });
 
-// Cerrar el popup
 closeHistoryButton.addEventListener("click", () => {
     historyPopup.close();
 });
