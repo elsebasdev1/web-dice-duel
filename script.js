@@ -7,6 +7,7 @@ const roundText = document.getElementById('game-round');
 const player1 = document.getElementById("player1");
 const player2 = document.getElementById("player2");
 const players = { "Player 1": 0, "Player 2": 0 };
+const historyTable = document.querySelector(".table-history tbody");
 
 let turn = 1; //Player 1 starts
 let round = 1;
@@ -59,7 +60,7 @@ function rollDice() {
             }
 
             players[`Player ${turn}`] += randomValue;
-            
+            saveToHistory();
 
             setTimeout(() => {  
                 if (round < 4 ) {
@@ -100,4 +101,15 @@ document.addEventListener('keydown', (event) => {
 function updatePlayerTable() {
     player1.textContent = `${players["Player 1"]} pts`;
     player2.textContent = `${players["Player 2"]} pts`;
+}
+
+function saveToHistory() {
+    const date = new Date().toLocaleString();
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${round}</td>
+        <td>${players["Player 1"]} pts</td>
+        <td>${players["Player 2"]} pts</td>
+    `;
+    historyTable.appendChild(row);
 }
