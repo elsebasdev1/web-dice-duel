@@ -1,6 +1,7 @@
 body{
     margin: 0;
     font-family: "Poppins", sans-serif;
+    background: linear-gradient(0deg, #ddd, #90caf9);
 }
 
 main{
@@ -19,7 +20,9 @@ h1{
 }
 
 #open-popup, 
-#restart-game{
+#restart-game,
+#roll-dice,
+#game-settings{
     align-self: end; /* Abajo */
     justify-self: start; /* Izquierda */
     font-size: 1rem;
@@ -33,9 +36,18 @@ h1{
     margin-bottom: 1rem;
 }
 
-#open-popup i{
-    font-size: 1.5rem;
+#roll-dice{
+    justify-self: center;
+    margin-right: 2em;
+    margin-bottom: 1.5em;
 }
+
+#open-popup, #game-settings, #restart-game{
+    width: 3.5em;
+    height: 3em;
+    margin-right: 0.5em;
+}
+
 
 ::backdrop{
     background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3));
@@ -91,17 +103,81 @@ dialog .controls button{
     width: 33%;
 }
 
+#settings-dialog {
+    width: 100%;
+    max-width: 400px;
+    padding: 1em;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+#settings-dialog h2 {
+    margin-bottom: 1em;
+    font-size: 1.5em;
+}
+
+#settings-dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+#settings-dialog input[type="text"], 
+#settings-dialog input[type="color"] {
+    padding: 0.5em;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#settings-dialog input[type="color"]{
+    height: 3em;
+    align-self: center;
+}
+
+#settings-dialog button {
+    padding: 0.8em 1.5em;
+    background: #00acee;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+#settings-dialog button:hover {
+    background: #0084b4;
+}
+
+#settings-dialog #close-settings:hover {
+    background: #d32f2f;
+}
+
+#settings-dialog #close-settings {
+    background: #f44336;
+}
+
+
+
 /*Better tooltip*/
 .rules-btn {
     position: fixed;
-    bottom: 10px;
-    left: 10px;
+    bottom: 5px;
+    left: 75px;
 }
 
 .restart-btn {
     position: fixed;
-    bottom: 10px;
-    left: 80px; 
+    bottom: 5px;
+    left: 140px; 
+}
+
+.setting-btn{
+    position: fixed;
+    bottom: 5px;
+    left: 10px;
 }
 
 .tooltip-container .tooltip-text {
@@ -308,54 +384,84 @@ dialog .controls button{
     grid-column: 1;
 }
 
-.table-styled{
+.table-styled, .table-players, .table-history {
+    position: absolute;
+    border: 2px solid #333;
+    background: #fff;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
     overflow: hidden;
-    border: 3px solid #fff;
-    background-color: #fff;
-    align-self: start; 
-    justify-self: start;
-    margin-top: 8.9em;
-    margin-left: 8em;
     text-align: left;
+    width: 300px; /* Valor por defecto */
 }
 
-.table-players{
-    overflow: hidden;
-    position: absolute;
-    border: 3px solid #fff;
-    background-color: #fff;
-    justify-self: end;
-    margin-top: 4em;
-    margin-right: 8em;
-    text-align: center;
+.table-styled {
+    top: 80px;
+    left: 10px;
+    margin-top: 6em;
+    margin-left: 8em;
+}
+
+.table-players {
+    position: relative;
+    justify-self: start;
     top: 5em;
+    right: -10px;
+    margin-left: 8em;
 }
 
-.table-history{
-    overflow: hidden;
-    position: absolute;
-    border: 3px solid #fff;
-    background-color: #fff;
-    justify-self: end;
-    margin-top: 15em;
+.table-history {
+    top: 5em;
+    right: -10px;
+    margin-top: 8.75em;
     margin-right: 5.25em;
     text-align: center;
-    top: 5em;
+    width: 400px;
 }
 
-.table-styled table, .table-players table, .table-history table{
-    border: 2px solid #333;
-    border-collapse: collapse;
-    width: 100%;
+.table-styled th, .table-styled td,
+.table-players th, .table-players td,
+.table-history th, .table-history td {
+    padding: 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
 }
+
+.table-styled table, .table-players table, .table-history table {
+    width: 100%;
+    table-layout: fixed;
+}
+
 
 th, td{
-	padding: 20px;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
 }
 
+th {
+    background: #00acee;
+    color: white;
+    font-weight: bold;
+}
 
 tr:hover td{
-	background-color: #369681;
+	background-color: #0069cc;
 	color: white;
 }
 
+button:hover {
+    background: #0084b4;
+    transform: scale(1.05);
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}

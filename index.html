@@ -6,7 +6,9 @@
     <title>Dice Duel</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/5052/5052121.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+
+
 </head>
 <body>
     <main>
@@ -32,7 +34,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Player 1</th><th>Player 2</th>
+                        <th id="tbl-players-player1">Player 1</th><th id="tbl-players-player2">Player 2</th>
                     </tr>
                 </thead>
                 <tr>
@@ -45,7 +47,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Fecha</th><th>Player 1</th><th>Player 2</th>
+                        <th>Fecha</th><th id="tbl-history-player1">Player 1</th><th id="tbl-history-player2">Player 2</th>
                     </tr>
                 </thead>
                 <tr>
@@ -113,20 +115,48 @@
             </div>
         </div>
 
-        <button id="roll-dice">Roll dice</button>
+        <button id="roll-dice">
+            <span class="material-symbols-outlined">casino</span>
+        </button>
     </main>
 
     <div class="tooltip-container rules-btn">
         <button id="open-popup">
-            <i class="fa-regular fa-circle-question"></i>
+            <span class="material-symbols-outlined">help</span>
         </button>
         <span class="tooltip-text">Rules</span>
     </div>
 
     <div class="tooltip-container restart-btn">
-        <button id="restart-game">restart</button>
+        <button id="restart-game">
+            <span class="material-symbols-outlined">restart_alt</span>
+        </button>
         <span class="tooltip-text">Restart</span>
     </div>
+
+    <div class="tooltip-container setting-btn">
+        <button id="game-settings">
+            <span class="material-symbols-outlined">settings</span>
+        </button>
+        <span class="tooltip-text">Settings</span>
+    </div>
+
+    <dialog id="settings-dialog">
+        <h2>Game's Configuration</h2>
+        <form id="settings-form">
+            <label for="player1-name">Player 1:</label>
+            <input type="text" id="player1-name" name="player1-name" value="Player 1">
+            <label for="dice-color">Color:</label>
+            <input type="color" id="dice-color-player1" name="dice-color-player1" value="#90caf9">
+            <label for="player2-name">Player 2:</label>
+            <input type="text" id="player2-name" name="player2-name" value="Player 2">
+            <label for="dice-color">Color:</label>
+            <input type="color" id="dice-color-player2" name="dice-color-player2" value="#ffbb80">
+            <br>
+            <button type="submit">Save</button>
+            <button type="button" id="close-settings">Close</button>
+        </form>
+    </dialog>
 
     <dialog id="rules-dialog">
         <h2>Rules of the game</h2>
